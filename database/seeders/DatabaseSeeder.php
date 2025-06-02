@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Post;
 
-
 class DatabaseSeeder extends Seeder
 {
     /**

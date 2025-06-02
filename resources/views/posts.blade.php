@@ -63,13 +63,16 @@
                             </div>
 
                             @if ($post->image)
-                                <div class="d-flex justify-content-center align-items-center" style="max-height: 450px; max-width:500px; overflow:hidden">
+                                <div class="d-flex justify-content-center align-items-center"
+                                    style="max-height: 450px; max-width:500px; overflow:hidden">
                                     <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid"
                                         alt="{{ $post->category->name }}">
                                 </div>
                             @else
-                                <img src="https://source.unsplash.com/500x450?{{ $post->category->name }}"
-                                    class="card-img-top" alt="{{ $post->category->name }}">
+                                {{-- <img src="https://source.unsplash.com/500x450?{{ $post->category->name }}"
+                                    class="card-img-top" alt="{{ $post->category->name }}"> --}}
+                                <img src="https://picsum.photos/seed/{{ $post->id }}/500/500" class="card-img"
+                                    alt="{{ $post->category->name }}">
                             @endif
 
                             <div class="card-body">

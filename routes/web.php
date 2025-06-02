@@ -10,6 +10,7 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +23,7 @@ use App\Http\Controllers\RegisterController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('halamanhome');
 });
 
 Route::get('/about', [AboutController::class, 'landing'])->name('halamanabout');

@@ -14,17 +14,16 @@ class RegisterController extends Controller
         ]);
     }
 
+
     public function registrasi(Request $request){
 
         try {
-
             $validatedData = $request->validate([
                 'name' => 'required|max:50|min:5',
                 'username' => ['required','max:30','min:5'],
-                'email' => 'required|email:dns|unique:userx',
+                'email' => 'required|email:dns|unique:users',
                 'password' => 'required|min:4|max:20'
             ]);
-    
             User::create($validatedData);
             
             return redirect( route('halamanlogin') )->with('success','Registrasi berhasil!!');
