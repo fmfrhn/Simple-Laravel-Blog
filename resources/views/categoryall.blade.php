@@ -1,21 +1,29 @@
 @extends('layout/main')
 
 @section('container')
-    <h1>{{ $title }}</h1> <br>
-
     <div class="container">
-        <div class="row">
+        <h1>{{ $title }}</h1> <br>
+        <div class="row g-3">
             @foreach ($categories as $category)
                 <div class="col-md-4">
-                    <div class="card text-bg-dark">
-                        <img src="https://loremflickr.com/500/500/{{ urlencode($category->name) }}" class="card-img"
-                            alt="{{ $category->name }}">
-                        <div class="card-img-overlay d-flex align-items-center p-0">
-                            <h5 class="card-title text-center flex-fill p-5 fs-4"
-                                style="background-color: rgba(0, 0, 0, 0.7)">
-                                <a href="{{ route('kategori', $category->name) }}" class="text-decoration-none text-white"
-                                    style="">{{ $category->name }}</a>
-                            </h5>
+                    <div class="card border-0 shadow-sm overflow-hidden">
+                        <div class="position-relative" style="height: 250px;">
+                            <img src="https://picsum.photos/seed/{{ urlencode($category->name . $category->id) }}/500/500"
+                                class="w-100 h-100 object-cover position-absolute top-0 start-0" alt="{{ $category->name }}">
+
+                            {{-- Strip shadow tengah --}}
+                            <div class="position-absolute top-50 start-50 translate-middle-x"
+                                style="
+                                     background-color: rgba(0, 0, 0, 0.5);
+                                     padding: 0.75rem 1.25rem;
+                                     border-radius: 0.5rem;
+                                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                                 ">
+                                <a href="{{ route('kategori', $category->name) }}"
+                                    class="text-white text-decoration-none fs-5 fw-semibold">
+                                    {{ $category->name }}
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

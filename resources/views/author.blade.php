@@ -8,18 +8,25 @@
             <form action="{{ route('author', ['author' => $title]) }}">
                 <div class="input-group mb-3">
                     <input type="hidden" name="author" value="{{ $title }}">
-                    
-                    <input type="text" class="form-control" placeholder="Search.." name="search" value="{{ request('search') }}">
+
+                    <input type="text" class="form-control" placeholder="Search.." name="search"
+                        value="{{ request('search') }}">
                     <button class="btn btn-dark" type="submit">Search</button>
-                  </div>
+                </div>
             </form>
         </div>
     </div>
 
     @if ($posts->count())
         <div class="card mb-3">
-            <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}" class="card-img-top"
-                alt="{{ $posts[0]->category->name }}">
+            @if ($posts[0]->image)
+                <img src="{{ asset('storage/' . $posts[0]->image) }}" class="card-img-top"
+                    alt="{{ $posts[0]->category->name }}" style="max-height: 400px; object-fit: cover;">
+            @else
+                <img src="https://picsum.photos/seed/{{ $posts[0]->id }}/1200/400" class="card-img-top"
+                    alt="{{ $posts[0]->category->name }}">
+            @endif
+
             <div class="card-body text-center">
                 <h3 class="card-title"> <a href="{{ route('postdetail', $posts[0]->slug) }}"
                         class="text-decoration-none text-dark">{{ $posts[0]->title }}</a>
@@ -34,7 +41,8 @@
                 </small>
 
                 <p class="card-text">{{ $posts[0]->excerpt }}</p>
-                <p class="card-text"><small class="text-body-secondary">{{ $posts[0]->created_at->diffForHumans() }}</small>
+                <p class="card-text"><small
+                        class="text-body-secondary">{{ $posts[0]->created_at->diffForHumans() }}</small>
                 </p>
                 <a href="{{ route('postdetail', $posts[0]->slug) }}" class="text-decoration-none btn btn-primary">Read
                     more...</a>
@@ -53,8 +61,14 @@
                             <a href="{{ route('kategori', ['slug' => $post->Category->name]) }}"
                                 class="text-decoration-none text-white">{{ is_null($post->Category) ? 'No Category' : $post->Category->name }}</a>
                         </div>
-                        <img src="https://source.unsplash.com/500x450?{{ $post->category->name }}" class="card-img-top"
-                            alt="{{ $post->category->name }}">
+                        @if ($post->image)
+                            <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top"
+                                alt="{{ $post->category->name }}"
+                                style="max-height: 300px; max-width: 500px; object-fit: cover;">
+                        @else
+                            <img src="https://picsum.photos/seed/{{ $post->id }}/500/300" class="card-img-top"
+                                alt="{{ $post->category->name }}">
+                        @endif
                         <div class="card-body">
                             <h5 class="card-title text-decoration-none text-dark"><a
                                     href="{{ route('postdetail', $post->slug) }}"
@@ -66,7 +80,7 @@
                             <p class="card-text">{{ $post->excerpt }}.</p>
 
                             <p class="card-text"><small
-                                class="text-body-secondary">{{ $post->created_at->diffForHumans() }}</small>
+                                    class="text-body-secondary">{{ $post->created_at->diffForHumans() }}</small>
                             </p>
 
                             <a href="{{ route('postdetail', $post->slug) }}"
@@ -78,9 +92,4 @@
             @endforeach
         </div>
     </div>
-    
-  
-
-    
-
 @endsection

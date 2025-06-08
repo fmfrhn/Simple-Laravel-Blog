@@ -1,4 +1,4 @@
-@extends('layout_mono.main')
+@extends('layout.main')
 
 @section('container')
     <h1>Halaman Home</h1>

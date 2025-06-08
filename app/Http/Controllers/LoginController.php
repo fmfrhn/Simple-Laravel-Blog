@@ -11,7 +11,7 @@ use App\Http\Middleware\Authenticate;
 class LoginController extends Controller
 {
     public function index (){
-        return view ('login.login', [
+        return view ('login.newlogin', [
             'title'=>'Login'
         ]);
     }
@@ -27,7 +27,24 @@ class LoginController extends Controller
             return redirect()->intended(route('dashboard'))->with('success','login berhasil!');
         }
 
-        return back()->with('loginError' ,'Login Failed!');
+        return back()->with('loginError' ,'Credentials did not match our record!');
+    }
+
+    public function forgotPassword(){
+        return view('login.forgot-password', [
+            'title' => 'Forgot Password'
+        ]);
+    }
+
+    public function resetPassword(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        // Logic to handle password reset (e.g., sending a reset link)
+        
+        // This is just a placeholder for demonstration purposes
+        return back()->with('status', 'Password reset link sent to your email.');
     }
 
     public function logout () {
@@ -37,6 +54,6 @@ class LoginController extends Controller
     
         request()->session()->regenerateToken();
     
-        return redirect(route('halamanlogout'));
+        return redirect(route('halamanblog'));
     }
 }
