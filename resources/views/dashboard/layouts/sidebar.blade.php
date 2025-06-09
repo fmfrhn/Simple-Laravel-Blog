@@ -9,6 +9,13 @@
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
             <ul class="nav flex-column">
                 <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 {{ Request::is('dashboards.user-setting') ? 'active' : '' }}"
+                        aria-current="page" href="{{ route('dashboards.user-setting') }}">
+                        <i class="bi bi-person-circle"></i>
+                        User Setting
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 {{ Request::is('dashboard') ? 'active' : '' }}"
                         aria-current="page" href="{{ route('dashboard') }}">
                         <svg class="bi">

@@ -22,7 +22,8 @@ class RegisterController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|max:50|min:5',
                 'username' => ['required', 'max:12', 'min:5', 'regex:/^\S+$/'],
-                'profile_image' => 'image|file|max:2024|nullable', // Validasi gambar
+                // 'profile_image' => 'image|file|max:2024|nullable', 
+                'profile_image' => 'image|file|nullable', 
                 'email' => 'required|email:dns|unique:users',
                 'password' => 'required|min:4|max:20|confirmed',
             ]);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\DashboardUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
@@ -54,11 +55,12 @@ Route::prefix('auth')->group(function () {
 
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard.dashboard', [
-        'title' => 'Dashboard'
-    ]);
-})->name('dashboard')->middleware('auth');
+Route::get('/dashboard', [DashboardPostController::class, 'main'])->name('dashboard')->middleware('auth');
+Route::get('/dashboard/user-setting',[DashboardUserController::class, 'userSetting'])->name('dashboards.user-setting')->middleware('auth');
+Route::get('/dashboard/user/update-form',[DashboardUserController::class, 'userUpdateForm'])->name('dashboards.user-update-form')->middleware('auth');
+Route::put('/dashboard/user/update', [DashboardUserController::class, 'updateUser'])->name('dashboards.user.update');
+Route::get('/dashboard/user/update-password-form', [DashboardUserController::class, 'userUpdatePasswordForm'])->name('dashboards.user-update-password-form');
+Route::post('/dashboard/user/update-password', [DashboardUserController::class, 'userUpdatePassword'])->name('dashboards.user-update-password');
 
 Route::get('dashboard/posts/check-slug', [DashboardPostController::class, 'checkSlug'])->name('dashboard.post.checkslug')->middleware('auth');
 
@@ -76,7 +78,11 @@ Route::resource('dashboard/posts', DashboardPostController::class, [
 Route::resource('/dashboard/categories', AdminCategoryController::class, [
     'names' => [
         'index' => 'administrator.category.index',
-        'create' => 'administrator.category.create'
+        'create' => 'administrator.category.create',
+        'store' => 'administrator.category.store',
+        'edit' => 'administrator.category.edit',
+        'update' => 'administrator.category.update',
+        'destroy' => 'administrator.category.destroy',
     ]
 ])->except('show')->middleware('admin');
 

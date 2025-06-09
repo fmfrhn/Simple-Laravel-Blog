@@ -17,7 +17,7 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('registrasi') }}" method="POST" class="px-2">
+                        <form action="{{ route('registrasi') }}" method="POST" enctype="multipart/form-data" class="px-2">
                             @csrf
 
                             {{-- Name --}}

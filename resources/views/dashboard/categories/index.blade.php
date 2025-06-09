@@ -3,18 +3,6 @@
 @section('container')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Post Categories</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-            </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-                <svg class="bi">
-                    <use xlink:href="#calendar3" />
-                </svg>
-                This week
-            </button>
-        </div>
     </div>
 
     @if (session()->has('success'))
@@ -23,8 +11,15 @@
         </div>
     @endif
 
+    @if (session()->has('error'))
+        <div class="alert alert-danger col-lg-6" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="table-responsive small col-lg-6">
         <a href="{{ route('administrator.category.create') }}" class="btn btn-primary mb-3">Create New Category</a>
+
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
@@ -39,20 +34,18 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $category->name }}</td>
                         <td>
-                            <a href="{{ route('dashboard.post.show', ['post' => $category->slug]) }}" class="badge bg-info">
-                                <i class="bi bi-eye-fill"></i>
-                            </a>
-                            <a href="{{ route('dashboard.post.edit', ['post' => $category->slug]) }}" class="badge bg-warning">
+                            {{-- Tombol Edit --}}
+                            <a href="{{ route('administrator.category.edit', $category->id) }}" class="badge bg-warning text-decoration-none">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
 
-                            <form action="{{ route('dashboard.post.destroy', ['post' => $category->slug]) }}" class="d-inline" method="POST">
-                                @method('delete')
+                            {{-- Tombol Delete --}}
+                            <form action="{{ route('administrator.category.destroy', $category->id) }}" method="POST" class="d-inline">
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Are you sure ?')"> 
-                                  <i class="bi bi-x-circle-fill"></i>
+                                @method('DELETE')
+                                <button class="badge bg-danger border-0" onclick="return confirm('Are you sure you want to delete this category?')">
+                                    <i class="bi bi-x-circle-fill"></i>
                                 </button>
-                                </a>
                             </form>
                         </td>
                     </tr>
