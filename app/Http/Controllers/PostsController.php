@@ -16,19 +16,22 @@ class PostsController extends Controller
 
       return view('posts', [
          'title' => 'Posts',
-         'posts' => Post::latest()->filter(request(['search','category']))->paginate(9)
+         'posts' => Post::latest()->filter(request(['search', 'category']))->paginate(9)
          // 'posts' => Post::with(['user', 'category'])->latest()->get()
          // 'posts' => Post::all()
 
       ]);
    }
 
-   
-   public function show (Post $post) {
-      return view ('post', [
+
+   public function show(Post $post)
+   {
+      $post->increment('views');
+
+      return view('post', [
          'title' => 'Single Post',
-         'post' => $post
-         
+         'post' => $post,
       ]);
    }
- }
+
+}

@@ -41,8 +41,9 @@
                 </small>
 
                 <p class="card-text">{{ $posts[0]->excerpt }}</p>
-                <p class="card-text"><small
-                        class="text-body-secondary">{{ $posts[0]->created_at->diffForHumans() }}</small>
+                <p class="card-text"><small class="text-body-secondary">{{ $posts[0]->created_at->diffForHumans() }} | <i
+                            class="fa-solid fa-eye"></i> {{ number_format($posts[0]->views) }} views
+                    </small>
                 </p>
                 <a href="{{ route('postdetail', $posts[0]->slug) }}" class="text-decoration-none btn btn-primary">Read
                     more...</a>
@@ -82,7 +83,9 @@
                             <p class="card-text"><small
                                     class="text-body-secondary">{{ $post->created_at->diffForHumans() }}</small>
                             </p>
-
+                            <p class="text-secondary mb-2">
+                                <i class="fa-solid fa-eye"></i> {{ number_format($post->views) }} views
+                            </p>
                             <a href="{{ route('postdetail', $post->slug) }}"
                                 class="text-decoration-none btn btn-primary">Read
                                 more...</a>

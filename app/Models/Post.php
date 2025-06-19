@@ -12,7 +12,18 @@ class Post extends Model
     use Sluggable, HasFactory; //auto ngambil table gapake ribet
     // protected $table = 'posts'; \ ->buat mendeklarasikan tabel mana yang dipilih dalam database
 
-    protected $fillable = ['title', 'excerpt', 'slug', 'body', 'author', 'image', 'user_id', 'category_id'];
+    protected $fillable = [
+        'title',
+        'excerpt',
+        'slug',
+        'body',
+        'author',
+        'image',
+        'user_id',
+        'category_id',
+        'views',
+        'likes'
+    ];
     protected $guarded = ['id'];
 
     protected $with = ['category', 'user'];
@@ -55,6 +66,10 @@ class Post extends Model
     public function User()
     {
         return $this->belongsTo(User::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function getRouteKeyName()

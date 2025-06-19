@@ -48,7 +48,9 @@
                 </div>
 
                 <p class="text-muted">{{ $posts[0]->excerpt }}</p>
-                <p class="text-secondary"><small>{{ $posts[0]->created_at->diffForHumans() }}</small></p>
+                <p class="text-secondary"><small>{{ $posts[0]->created_at->diffForHumans() }}</small> | <i
+                        class="fa-solid fa-eye"></i> {{ number_format($posts[0]->views) }} views
+                </p>
                 <a href="{{ route('postdetail', $posts[0]->slug) }}" class="btn btn-primary">Read more</a>
             </div>
         </div>
@@ -86,7 +88,9 @@
                             <p class="card-text"><small
                                     class="text-body-secondary">{{ $post->created_at->diffForHumans() }}</small>
                             </p>
-
+                            <p class="text-secondary mb-2">
+                                <i class="fa-solid fa-eye"></i> {{ number_format($post->views) }} views
+                            </p>
                             <a href="{{ route('postdetail', $post->slug) }}"
                                 class="text-decoration-none btn btn-primary">Read
                                 more...</a>

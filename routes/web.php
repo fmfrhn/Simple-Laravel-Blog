@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\DashboardPostController;
-use App\Http\Controllers\DashboardUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\ForgotPasswordController;
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,10 @@ Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('kat
 Route::get('/categories', [CategoryController::class, 'index'])->name('kategoriall');
 
 Route::get('/posts/{post:slug}', [PostsController::class, 'show'])->name('postdetail');
+Route::post('/post/{post}/comment', [CommentController::class, 'store'])
+    ->middleware('auth')->name('comment.store');
+
+
 
 Route::get('/authors/{author}', [AuthorController::class, 'show'])->name('author');
 
@@ -56,8 +61,8 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::get('/dashboard', [DashboardPostController::class, 'main'])->name('dashboard')->middleware('auth');
-Route::get('/dashboard/user-setting',[DashboardUserController::class, 'userSetting'])->name('dashboards.user-setting')->middleware('auth');
-Route::get('/dashboard/user/update-form',[DashboardUserController::class, 'userUpdateForm'])->name('dashboards.user-update-form')->middleware('auth');
+Route::get('/dashboard/user-setting', [DashboardUserController::class, 'userSetting'])->name('dashboards.user-setting')->middleware('auth');
+Route::get('/dashboard/user/update-form', [DashboardUserController::class, 'userUpdateForm'])->name('dashboards.user-update-form')->middleware('auth');
 Route::put('/dashboard/user/update', [DashboardUserController::class, 'updateUser'])->name('dashboards.user.update');
 Route::get('/dashboard/user/update-password-form', [DashboardUserController::class, 'userUpdatePasswordForm'])->name('dashboards.user-update-password-form');
 Route::post('/dashboard/user/update-password', [DashboardUserController::class, 'userUpdatePassword'])->name('dashboards.user-update-password');
