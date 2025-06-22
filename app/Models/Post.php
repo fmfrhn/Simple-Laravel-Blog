@@ -27,11 +27,6 @@ class Post extends Model
 
     protected $with = ['category', 'user'];
 
-    public function author_post()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-
-    }
     public function scopeFilter($query, array $filters)
     {
         // if(isset($filters['search']) ? $filters['search'] : false) {
@@ -71,6 +66,15 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
+    }
+
+    public function isLikedBy(User $user)
+    {
+        return $this->likes->contains('id', $user->id);
+    }
     public function getRouteKeyName()
     {
         return 'slug';

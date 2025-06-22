@@ -41,6 +41,7 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('kategoria
 Route::get('/posts/{post:slug}', [PostsController::class, 'show'])->name('postdetail');
 Route::post('/post/{post}/comment', [CommentController::class, 'store'])
     ->middleware('auth')->name('comment.store');
+Route::post('/posts/{post:slug}/like', [PostsController::class, 'toggleLike'])->name('posts.toggleLike');
 
 
 
