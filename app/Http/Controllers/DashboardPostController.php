@@ -39,6 +39,18 @@ class DashboardPostController extends Controller
             return str_word_count(strip_tags($post->body));
         }));
 
+        $totalViews = $posts->sum('views');
+
+        $monthlyViews = $posts->whereBetween('created_at', [
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth()
+        ])->sum('views');
+
+        $averageViews = round($posts->avg('views'));
+
+        $topViewedPosts = $posts->sortByDesc('views')->take(5);
+
+
 
 
         return view('dashboard.dashboard', [
@@ -49,16 +61,37 @@ class DashboardPostController extends Controller
             'postsByCategory' => $postsByCategory,
             'recentPosts' => $recentPosts,
             'averageWordCount' => $averageWordCount,
-            //  'postsByHour' => $postsByHour,
+            'totalViews' => $totalViews,
+            'monthlyViews' => $monthlyViews,
+            'averageViews' => $averageViews,
+            'topViewedPosts' => $topViewedPosts,
         ]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard.posts.index', [
-            'posts' => Post::where('user_id', auth()->user()->id)->get()
-        ]);
+        $user = Auth::user();
+
+        $posts = Post::query()
+            ->with('category')
+            ->when(!$user->is_admin, function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->when($request->search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', '%' . $search . '%')
+                        ->orWhereHas('category', function ($q2) use ($search) {
+                            $q2->where('name', 'like', '%' . $search . '%');
+                        });
+                });
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('dashboard.posts.index', compact('posts'));
     }
+
 
     /**
      * Show the form for creating a new resource.

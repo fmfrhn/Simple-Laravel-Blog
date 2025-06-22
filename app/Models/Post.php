@@ -10,7 +10,6 @@ use App\Models\User;
 class Post extends Model
 {
     use Sluggable, HasFactory; //auto ngambil table gapake ribet
-    // protected $table = 'posts'; \ ->buat mendeklarasikan tabel mana yang dipilih dalam database
 
     protected $fillable = [
         'title',
