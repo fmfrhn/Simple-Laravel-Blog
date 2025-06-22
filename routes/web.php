@@ -66,6 +66,7 @@ Route::get('/dashboard/user/update-form', [DashboardUserController::class, 'user
 Route::put('/dashboard/user/update', [DashboardUserController::class, 'updateUser'])->name('dashboards.user.update');
 Route::get('/dashboard/user/update-password-form', [DashboardUserController::class, 'userUpdatePasswordForm'])->name('dashboards.user-update-password-form');
 Route::post('/dashboard/user/update-password', [DashboardUserController::class, 'userUpdatePassword'])->name('dashboards.user-update-password');
+Route::get('/dashboard/posts/search', [DashboardPostController::class, 'search'])->middleware('auth');
 
 Route::get('dashboard/posts/check-slug', [DashboardPostController::class, 'checkSlug'])->name('dashboard.post.checkslug')->middleware('auth');
 

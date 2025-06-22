@@ -6,6 +6,7 @@
             <h1 class="h2">Welcome Back, {{ auth()->user()->name }}</h1>
         </div>
 
+        {{-- Statistik Panel --}}
         <div class="row">
             <div class="col-md-4">
                 <div class="card text-white bg-primary mb-3">
@@ -35,6 +36,37 @@
             </div>
         </div>
 
+        {{-- Statistik Views --}}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-white bg-dark mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Semua Views</h5>
+                        <h2 class="card-text">{{ $totalViews }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Views Bulan Ini</h5>
+                        <h2 class="card-text">{{ $monthlyViews }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-dark bg-warning mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Rata-rata Views per Post</h5>
+                        <h2 class="card-text">{{ $averageViews }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Grafik dan Post Terbaru --}}
         <div class="row">
             <div class="col-md-4">
                 <div class="card mt-4">
@@ -46,6 +78,30 @@
                     </div>
                 </div>
             </div>
+
+
+
+            <div class="col-md-8">
+                <div class="card mt-4">
+                    <div class="card-header">
+                        5 Post dengan Views Tertinggi
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            @foreach ($topViewedPosts as $post)
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{{ $post->title }}</strong>
+                                        <div class="text-muted">{{ $post->views }} views</div>
+                                    </div>
+                                    <span class="badge bg-dark">{{ $post->category->name ?? 'Tanpa Kategori' }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-8">
                 <div class="card mt-4">
                     <div class="card-header">
