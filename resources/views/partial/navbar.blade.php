@@ -1,7 +1,7 @@
-<header class="navbar navbar-expand-md d-print-none navbar-dark bg-dark">
+<navbar class="navbar navbar-expand-md d-print-none navbar-dark bg-dark py-4 sticky">
     <div class="container-xl">
-        <a class="navbar-brand" href="#">
-            Farhan Blog
+        <a class="navbar-brand" href="{{ route('halamanblog') }}">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo" height="40">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
@@ -55,4 +55,4 @@
             </div>
         </div>
     </div>
-</header>
+</navbar>
