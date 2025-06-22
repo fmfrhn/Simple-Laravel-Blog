@@ -34,4 +34,17 @@ class PostsController extends Controller
       ]);
    }
 
+   public function toggleLike(Post $post)
+   {
+      $user = auth()->user();
+
+      if ($post->isLikedBy($user)) {
+         $post->likes()->detach($user->id); // unlike
+      } else {
+         $post->likes()->attach($user->id); // like
+      }
+
+      return back();
+   }
+
 }

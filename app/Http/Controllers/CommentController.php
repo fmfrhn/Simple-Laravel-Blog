@@ -15,9 +15,10 @@ class CommentController extends Controller
         ]);
 
         Comment::create([
+            'post_id' => $post->id,
             'user_id' => auth()->id(),
-            'post_id' => $post->id, // gunakan ID asli
             'content' => $request->content,
+            'parent_id' => $request->parent_id,
         ]);
 
         return back()->with('success', 'Komentar berhasil ditambahkan!');
