@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
@@ -73,7 +74,7 @@ class DashboardPostController extends Controller
         $user = Auth::user();
 
         $posts = Post::query()
-            ->with('category')
+            ->with('category', 'user')
             ->when(!$user->is_admin, function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
@@ -85,6 +86,9 @@ class DashboardPostController extends Controller
                         });
                 });
             })
+            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
+                $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
+            })
             ->latest()
             ->paginate(10)
             ->withQueryString();
@@ -92,7 +96,23 @@ class DashboardPostController extends Controller
         return view('dashboard.posts.index', compact('posts'));
     }
 
+    public function exportPdf(Request $request)
+    {
+        if (!Auth::user()->is_admin) {
+            abort(403);
+        }
 
+        $posts = Post::query()
+            ->with('category', 'user')
+            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
+                $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
+            })
+            ->latest()
+            ->get();
+
+        $pdf = Pdf::loadView('pdf.post-pdf', compact('posts'));
+        return $pdf->download('laporan-posts.pdf');
+    }
     /**
      * Show the form for creating a new resource.
      */

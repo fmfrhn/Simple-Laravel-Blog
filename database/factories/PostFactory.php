@@ -27,7 +27,7 @@ class PostFactory extends Factory
             //memasukkan tag p html kedalam database menggunakan collect & ero function
 
             'user_id'=>mt_rand(1,4),
-            'category_id'=>mt_rand(1,3)
+            'category_id'=>mt_rand(1,5)
         ];
     }
 }

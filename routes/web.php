@@ -68,7 +68,7 @@ Route::put('/dashboard/user/update', [DashboardUserController::class, 'updateUse
 Route::get('/dashboard/user/update-password-form', [DashboardUserController::class, 'userUpdatePasswordForm'])->name('dashboards.user-update-password-form');
 Route::post('/dashboard/user/update-password', [DashboardUserController::class, 'userUpdatePassword'])->name('dashboards.user-update-password');
 Route::get('/dashboard/posts/search', [DashboardPostController::class, 'search'])->middleware('auth');
-
+Route::get('/dashboard/posts/export-pdf', [DashboardPostController::class, 'exportPdf'])->name('dashboard.post.exportPdf');
 Route::get('dashboard/posts/check-slug', [DashboardPostController::class, 'checkSlug'])->name('dashboard.post.checkslug')->middleware('auth');
 
 Route::resource('dashboard/posts', DashboardPostController::class, [
