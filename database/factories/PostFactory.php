@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,8 +27,9 @@ class PostFactory extends Factory
             'body'=>collect($this->faker->paragraphs(mt_rand(5,10)))->map(fn($p)=> "<p>$p</p>")->implode(''),
             //memasukkan tag p html kedalam database menggunakan collect & ero function
 
-            'user_id'=>mt_rand(1,4),
-            'category_id'=>mt_rand(1,3)
+            'user_id'=>mt_rand(1,7),
+            'category_id'=>mt_rand(1,5),
+            'created_at' => Carbon::now()->subDays(rand(1, 14)),
         ];
     }
 }
