@@ -102,17 +102,21 @@ class DashboardPostController extends Controller
             abort(403);
         }
 
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
         $posts = Post::query()
             ->with('category', 'user')
-            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
-                $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
+            ->when($start_date && $end_date, function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('created_at', [$start_date, $end_date]);
             })
             ->latest()
             ->get();
 
-        $pdf = Pdf::loadView('pdf.post-pdf', compact('posts'));
+        $pdf = Pdf::loadView('pdf.post-pdf', compact('posts', 'start_date', 'end_date'));
         return $pdf->download('laporan-posts.pdf');
     }
+
     /**
      * Show the form for creating a new resource.
      */

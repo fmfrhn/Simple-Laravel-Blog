@@ -15,11 +15,22 @@
             padding: 6px;
             text-align: left;
         }
-        h2 { text-align: center; }
+        h2, .date-range {
+            text-align: center;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <h2>Laporan Data Post</h2>
+
+    @if ($start_date && $end_date)
+        <div class="date-range">
+            <strong>Periode:</strong>
+            {{ \Carbon\Carbon::parse($start_date)->format('d-m-Y') }} s/d {{ \Carbon\Carbon::parse($end_date)->format('d-m-Y') }}
+        </div>
+    @endif
+
     <table>
         <thead>
             <tr>

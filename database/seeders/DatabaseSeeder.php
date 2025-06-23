@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
             'slug'=>'wisata-gunung', 
         ]);
 
-        \App\Models\Post::factory(100)->create();
+        \App\Models\Post::factory(300)->create();
         
     }
 }
